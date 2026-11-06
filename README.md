@@ -1,5 +1,7 @@
 # discord-native
 
+[![CI](https://github.com/watrabi/discord-native/actions/workflows/ci.yml/badge.svg)](https://github.com/watrabi/discord-native/actions/workflows/ci.yml)
+
 A lightweight, native Discord client written in Rust. It aims to be useful first, then light on CPU, then light on RAM.
 
 ![screenshot](docs/screenshot.png)
@@ -46,6 +48,20 @@ cargo build --release
 Linux needs the usual windowing libraries at runtime: `libxkbcommon-x11`, `libGL`/`libEGL`, and Wayland or X11. Both Wayland and X11 are supported.
 
 The release profile uses fat LTO, a single codegen unit, `panic = "abort"`, and strips symbols.
+
+## Prebuilt binaries & CI
+
+Every push and pull request runs GitHub Actions (`.github/workflows/ci.yml`). It runs `cargo fmt --check`, `clippy -D warnings` and the tests, then builds release binaries for:
+
+- Linux x86_64 (built on Ubuntu 22.04, so it runs on older glibc versions)
+- Windows x86_64
+- macOS on Apple Silicon and on Intel
+
+You can download the binaries from each workflow run's **Artifacts**. Pushing a tag such as `v0.1.0` also publishes a GitHub Release with the archives and a `SHA256SUMS.txt` file:
+
+```bash
+git tag v0.1.0 && git push origin v0.1.0
+```
 
 ## Configuration
 
